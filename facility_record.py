@@ -75,4 +75,4 @@ class FacilityRecord:
                 f"Location: {self.address}, {self.city}, {self.province} {self.postal_code}\n"
                 f"Coordinates: {self.latitude}, {self.longitude}\n"
                 f"Emissions: {self.emissions} {self.units} ({self.report_year})\n"
-                f"Details: {self.facility_details}\n")
+                f"Details: {self.facility_details}")
