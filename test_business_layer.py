@@ -82,4 +82,8 @@ class TestFacilityManager(unittest.TestCase):
         self.assertEqual(self.manager.get_facility_count(), 0)
 
 if __name__ == '__main__':
+    print("Running unit tests for FacilityManager...")
+    print("Huaifang Yin - CST8002 - Programming Language Research Project")
+    print("Practical Project02 - May 25, 2025")
+    # Run the tests
     unittest.main() 
