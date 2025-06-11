@@ -2,7 +2,7 @@
 Course: CST8002 - Programming Language Research Project
 Assignment: Practical Project02
 Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [May 25  2025]
+Due Date: [June 15  2025]
 Author: [Huaifang Yin]
 Description: Presentation layer for the facility management system.
 """
@@ -43,7 +43,7 @@ class FacilityManagementSystem:
         print("7. Delete facility")
         print("8. Exit")
     
-    def display_facilities(self, facilities: list[FacilityRecord], start: int = 0, count: int = 10):
+    def display_facilities(self, facilities: list[FacilityRecord], start: int = 0, count: int = 100):
         """
         Show a list of facilities with pagination.
         Args:
@@ -142,7 +142,7 @@ class FacilityManagementSystem:
             elif choice == "3":
                 # Show all facilities
                 if self.manager.get_facility_count() > 0:
-                    self.display_facilities(self.manager.facilities)
+                    self.display_facilities(self.manager.facilities, start=0, count=3)
                 else:
                     print("\nNo facilities to display.")
             
