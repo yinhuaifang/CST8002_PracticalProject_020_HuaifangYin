@@ -33,6 +33,22 @@ class FacilityManager:
         """
         self._facilities.append(facility)
     
+    def remove_facility(self, index: int) -> bool:
+        """
+        Remove a facility at the specified index.
+        
+        Args:
+            index (int): Index of the facility to remove
+            
+        Returns:
+            bool: True if removal was successful, False otherwise
+        """
+        try:
+            self._facilities.pop(index)
+            return True
+        except IndexError:
+            return False
+    
     def update_facility(self, index: int, facility: FacilityRecord) -> bool:
         """
         Update a facility at the specified index.
@@ -64,6 +80,10 @@ class FacilityManager:
             return self._facilities[index]
         except IndexError:
             return None
+    
+    def clear_facilities(self) -> None:
+        """Clear all facilities from the list."""
+        self._facilities.clear()
     
     def get_facility_count(self) -> int:
         """
