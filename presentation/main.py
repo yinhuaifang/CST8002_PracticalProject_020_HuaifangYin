@@ -24,7 +24,7 @@ class FacilityManagementSystem:
         """Initialize the facility management system."""
         self.manager = FacilityManager()
         self.file_manager = FileManager()
-        self.data_file = "Nitrogen oxide emissions by facility.csv"
+        self.data_file = os.path.join("..", "data", "Nitrogen oxide emissions by facility.csv")
 
     #self.data_file = "Nitrogen oxide emissions by facility.csv"
     
@@ -47,7 +47,7 @@ class FacilityManagementSystem:
         print("7. Delete facility")
         print("8. Exit")
     
-    def display_facilities(self, facilities: list[FacilityRecord], start: int = 0, count: int = 10):
+    def display_facilities(self, facilities: list[FacilityRecord], start: int = 0, count: int = 100):
         """
         Show a list of facilities with pagination.
         Args:
@@ -170,6 +170,9 @@ class FacilityManagementSystem:
             elif choice == "5":
                 # Add a new facility
                 facility = self.get_facility_input()
+                if facility:
+                    self.manager.add_facility(facility)
+                    print("\nFacility added successfully.")
             
             elif choice == "6":
                 # Edit a facility
