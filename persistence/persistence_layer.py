@@ -78,6 +78,10 @@ class FileManager:
         if not facilities:
             return None
             
+        # Generate a unique filename using UUID
+        filename = f"facilities_{uuid.uuid4()}.csv"
+        
+        filename = os.path.join("..", "data", filename)
 
         #filename = f"facilities_updated.csv"
         
