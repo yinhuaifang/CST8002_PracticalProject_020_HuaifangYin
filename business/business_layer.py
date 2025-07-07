@@ -4,7 +4,7 @@ Assignment: Practical Project03
 Professor: [Stanley Pieda,Tyler DeLay]
 Due Date: [June 15  2025]
 Author: [Huaifang Yin]
-Description: Business layer for managing facility records and operations.
+Description: Business layer for managing facility records and operations with multithreading support.
 """
 
 from typing import List, Optional
@@ -24,6 +24,10 @@ class FacilityManager:
             DetailedFormatter()
         ]
         self._current_formatter_index = 0
+        self._database_manager = None
+        self._use_database = True  # Default to database mode
+        self._current_format_class = StandardFormatFacility  # Default format class
+        self._connection = None  # Django-style database connection
     
     @property
     def facilities(self) -> List[FacilityRecord]:
