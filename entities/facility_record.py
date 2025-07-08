@@ -399,6 +399,20 @@ class FacilityManager:
             print(f"Error counting facilities: {e}")
             return 0
 
+class ShortFormatFacility(FacilityRecord):
+    """
+    Subclass that displays facility information in a short, compact format.
+    """
+    
+    def display(self) -> str:
+        """
+        Display facility in short format.
+        
+        Returns:
+            str: Short formatted string
+        """
+        return (f"{self.facility_name} | {self.company_name} | "
+                f"{self.city}, {self.province} | {self.emissions} {self.units}")
 class StandardFormatFacility(FacilityRecord):
     """
     Subclass that displays facility information in the original standard format.
