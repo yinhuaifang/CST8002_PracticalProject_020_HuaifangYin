@@ -413,6 +413,35 @@ class ShortFormatFacility(FacilityRecord):
         """
         return (f"{self.facility_name} | {self.company_name} | "
                 f"{self.city}, {self.province} | {self.emissions} {self.units}")
+
+class DetailedFormatFacility(FacilityRecord):
+    """
+    Subclass that displays facility information in a detailed, comprehensive format.
+    """
+    
+    def display(self) -> str:
+        """
+        Display facility in detailed format.
+        
+        Returns:
+            str: Detailed formatted string
+        """
+        return (f"=== DETAILED FACILITY REPORT ===\n"
+                f"NPRI ID: {self.npri_id}\n"
+                f"Facility Name: {self.facility_name}\n"
+                f"Company: {self.company_name}\n"
+                f"Address: {self.address}\n"
+                f"City: {self.city}\n"
+                f"Province: {self.province}\n"
+                f"Postal Code: {self.postal_code}\n"
+                f"Latitude: {self.latitude}\n"
+                f"Longitude: {self.longitude}\n"
+                f"Emissions: {self.emissions} {self.units}\n"
+                f"Report Year: {self.report_year}\n"
+                f"Facility Details: {self.facility_details}\n"
+                f"Facility Information: {self.facility_information}\n"
+                f"=================================")
+
 class StandardFormatFacility(FacilityRecord):
     """
     Subclass that displays facility information in the original standard format.
