@@ -460,3 +460,95 @@ class StandardFormatFacility(FacilityRecord):
                 f"Coordinates: {self.latitude}, {self.longitude}\n"
                 f"Emissions: {self.emissions} {self.units} ({self.report_year})\n"
                 f"Details: {self.facility_details}")
+
+# Legacy RecordFormatter classes for backward compatibility
+class RecordFormatter(ABC):
+    """
+    Abstract base class for formatting facility records.
+    This demonstrates inheritance and polymorphism by providing
+    different formatting strategies for displaying records.
+    """
+    
+    @abstractmethod
+    def format_record(self, record) -> str:
+        """
+        Abstract method to format a facility record.
+        
+        Args:
+            record: The facility record to format
+            
+        Returns:
+            str: Formatted string representation of the record
+        """
+        pass
+
+class StandardFormatter(RecordFormatter):
+    """
+    Standard formatter that displays records in the original format.
+    """
+    
+    def format_record(self, record) -> str:
+        """
+        Format record in standard format.
+        
+        Args:
+            record: The facility record to format
+            
+        Returns:
+            str: Standard formatted string
+        """
+        return (f"Facility: {record.facility_name}\n"
+                f"Company: {record.company_name}\n"
+                f"Location: {record.address}, {record.city}, {record.province} {record.postal_code}\n"
+                f"Coordinates: {record.latitude}, {record.longitude}\n"
+                f"Emissions: {record.emissions} {record.units} ({record.report_year})\n"
+                f"Details: {record.facility_details}")
+
+class CompactFormatter(RecordFormatter):
+    """
+    Compact formatter that displays records in a condensed format.
+    """
+    
+    def format_record(self, record) -> str:
+        """
+        Format record in compact format.
+        
+        Args:
+            record: The facility record to format
+            
+        Returns:
+            str: Compact formatted string
+        """
+        return (f"{record.facility_name} | {record.company_name} | "
+                f"{record.city}, {record.province} | {record.emissions} {record.units}")
+
+class DetailedFormatter(RecordFormatter):
+    """
+    Detailed formatter that displays records with comprehensive information.
+    """
+    
+    def format_record(self, record) -> str:
+        """
+        Format record in detailed format.
+        
+        Args:
+            record: The facility record to format
+            
+        Returns:
+            str: Detailed formatted string
+        """
+        return (f"=== DETAILED FACILITY REPORT ===\n"
+                f"NPRI ID: {record.npri_id}\n"
+                f"Facility Name: {record.facility_name}\n"
+                f"Company: {record.company_name}\n"
+                f"Address: {record.address}\n"
+                f"City: {record.city}\n"
+                f"Province: {record.province}\n"
+                f"Postal Code: {record.postal_code}\n"
+                f"Latitude: {record.latitude}\n"
+                f"Longitude: {record.longitude}\n"
+                f"Emissions: {record.emissions} {record.units}\n"
+                f"Report Year: {record.report_year}\n"
+                f"Facility Details: {record.facility_details}\n"
+                f"Facility Information: {record.facility_information}\n"
+                f"=================================")
