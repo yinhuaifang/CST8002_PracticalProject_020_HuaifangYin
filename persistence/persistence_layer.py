@@ -1,6 +1,6 @@
 """
 Course: CST8002 - Programming Language Research Project
-Assignment: Practical Project03
+Assignment: Practical Project02
 Professor: [Stanley Pieda,Tyler DeLay]
 Due Date: [June 15  2025]
 Author: [Huaifang Yin]
@@ -10,7 +10,7 @@ import os
 import csv
 import uuid
 from typing import List, Optional
-from entities.facility_record import FacilityRecord, StandardFormatFacility
+from entities.facility_record import FacilityRecord
 
 class FileManager:
     """
@@ -41,8 +41,7 @@ class FileManager:
                     # Handle empty emission values
                     emissions = float(row['Emissions']) if row['Emissions'] else 0.0
                     
-                    # Create facility using StandardFormatFacility (default format for loading)
-                    facility = StandardFormatFacility(
+                    facility = FacilityRecord(
                         npri_id=row['NPRI ID'],
                         facility_name=row['Facility name'],
                         company_name=row['Company name'],
@@ -82,7 +81,7 @@ class FileManager:
         # Generate a unique filename using UUID
         filename = f"facilities_{uuid.uuid4()}.csv"
         
-        filename = os.path.join("data", filename)
+        filename = os.path.join("..", "data", filename)
 
         #filename = f"facilities_updated.csv"
         
