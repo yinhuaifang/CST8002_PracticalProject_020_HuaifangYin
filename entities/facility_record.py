@@ -1,8 +1,8 @@
 """
 Course: CST8002 - Programming Language Research Project
 Assignment: Practical Project03
-Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [June 15  2025]
+Professor: [Tyler DeLay]
+Due Date: [Aug 03 2025]
 Author: [Huaifang Yin]
 Description: This program reads and analyzes nitrogen oxide emissions data from Canadian facilities.
 It loads data from a CSV file, creates FacilityRecord objects, and displays the information.

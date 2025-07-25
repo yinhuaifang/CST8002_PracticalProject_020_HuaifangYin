@@ -1,8 +1,8 @@
 """
 Course: CST8002 - Programming Language Research Project
 Assignment: Practical Project03
-Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [June 15  2025]
+Professor: [Tyler DeLay]
+Due Date: [Aug 03 2025]
 Author: [Huaifang Yin]
 Description: Business layer for managing facility records and MySQL database operations.
 Now includes visualization capabilities for data analysis.
@@ -11,6 +11,7 @@ Now includes visualization capabilities for data analysis.
 from typing import List, Optional
 from entities.facility_record import FacilityRecord
 from persistence.database_layer import DatabaseManager
+from business.ascii_chart_generator import ASCIIChartGenerator
 
 class FacilityManager:
     """
@@ -31,6 +32,9 @@ class FacilityManager:
         self.db_manager = DatabaseManager(host, user, password, database)
         self._facilities_cache: List[FacilityRecord] = []
         self._cache_dirty = True
+        
+        # Initialize ASCII chart generator
+        self.ascii_chart_generator = ASCIIChartGenerator()
         
         # Connect to database and create table
         if self.db_manager.connect():
@@ -243,14 +247,14 @@ class FacilityManager:
         Returns:
             List[str]: List of available chart types
         """
-        return self.chart_generator.get_available_chart_types()
+        return self.ascii_chart_generator.get_available_chart_types()
     
-    def generate_chart(self, chart_type: str, **kwargs) -> str:
+    def generate_ascii_chart(self, chart_type: str, **kwargs) -> str:
         """
-        Generate a chart based on the specified type.
+        Generate an ASCII art chart based on the specified type.
         
         Args:
-            chart_type (str): Type of chart to generate
+            chart_type (str): Type of chart to generate ('province', 'year', 'top_facilities')
             **kwargs: Additional arguments for specific chart types
             
         Returns:
@@ -260,7 +264,44 @@ class FacilityManager:
         if not facilities:
             return "No data available for chart generation. Please load data first."
         
-        return self.chart_generator.generate_chart(chart_type, facilities, **kwargs)
+        return self.ascii_chart_generator.generate_chart(chart_type, facilities, **kwargs)
+    
+    def generate_province_ascii_chart(self, style: str = 'bar') -> str:
+        """
+        Generate ASCII art chart for emissions by province.
+        
+        Args:
+            style (str): Chart style ('bar', 'line', 'histogram')
+            
+        Returns:
+            str: ASCII art chart
+        """
+        return self.generate_ascii_chart('province', style=style)
+    
+    def generate_year_ascii_chart(self, style: str = 'line') -> str:
+        """
+        Generate ASCII art chart for emissions by year.
+        
+        Args:
+            style (str): Chart style ('bar', 'line', 'histogram')
+            
+        Returns:
+            str: ASCII art chart
+        """
+        return self.generate_ascii_chart('year', style=style)
+    
+    def generate_top_facilities_ascii_chart(self, top_n: int = 10, style: str = 'bar') -> str:
+        """
+        Generate ASCII art chart for top facilities by emissions.
+        
+        Args:
+            top_n (int): Number of top facilities to show
+            style (str): Chart style ('bar', 'line', 'histogram')
+            
+        Returns:
+            str: ASCII art chart
+        """
+        return self.generate_ascii_chart('top_facilities', top_n=top_n, style=style)
     
     def search_facilities_by_province(self, province: str) -> List[FacilityRecord]:
         """

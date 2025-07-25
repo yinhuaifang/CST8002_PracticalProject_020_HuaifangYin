@@ -1,8 +1,8 @@
 """
 Course: CST8002 - Programming Language Research Project
 Assignment: Practical Project03
-Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [June 15  2025]
+Professor: [Tyler DeLay]
+Due Date: [Aug 03 2025]
 Author: [Huaifang Yin]
 Description: Test suite for Flask app (app.py).
 Tests all routes, chart data generation, and template rendering.

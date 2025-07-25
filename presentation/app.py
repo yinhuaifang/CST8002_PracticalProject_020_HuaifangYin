@@ -1,8 +1,8 @@
 """
 Course: CST8002 - Programming Language Research Project
-Assignment: Practical Project03
-Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [June 15  2025]
+Assignment: Practical Project04
+Professor: [Tyler DeLay]
+Due Date: [Aug 03 2025]
 Author: [Huaifang Yin]
 Description: Flask web service for Facility Management System.
 Provides chart visualization endpoints for data analysis.
@@ -131,7 +131,7 @@ def show_year_chart():
 def show_top_facilities_chart():
     """Show top facilities chart as interactive Chart.js chart with multiple chart types."""
     try:
-        top_n = request.args.get('top_n', 10, type=int)
+        top_n = request.args.get('top_n', 3, type=int)
         
         # Get chart data using ChartGenerator logic
         labels, values = get_top_facilities_chart_data(top_n)
@@ -147,6 +147,172 @@ def show_top_facilities_chart():
     except Exception as e:
         return f"<h2>Error loading chart: {e}</h2>"
 
+# ASCII Art Chart Endpoints
+@app.route('/ascii/province')
+def show_province_ascii_chart():
+    """Show province chart as ASCII art."""
+    try:
+        style = request.args.get('style', 'bar')
+        ascii_chart = facility_manager.generate_province_ascii_chart(style=style)
+        
+        return f"""
+        <html>
+        <head>
+            <title>Province Chart - ASCII Art</title>
+            <style>
+                body {{ font-family: 'Courier New', monospace; margin: 20px; }}
+                pre {{ white-space: pre; font-size: 12px; }}
+                .nav {{ margin-bottom: 20px; }}
+                .nav a {{ margin-right: 10px; }}
+            </style>
+        </head>
+        <body>
+            <div class="nav">
+                <a href="/">Home</a>
+                <a href="/charts/province">Interactive Chart</a>
+                <a href="/ascii/province">ASCII Chart</a>
+                <a href="/ascii/province?style=line">Line Style</a>
+                <a href="/ascii/province?style=histogram">Histogram Style</a>
+            </div>
+            <h2>Emissions by Province - ASCII Art Chart</h2>
+            <pre>{ascii_chart}</pre>
+        </body>
+        </html>
+        """
+    except Exception as e:
+        return f"<h2>Error generating ASCII chart: {e}</h2>"
+
+@app.route('/ascii/year')
+def show_year_ascii_chart():
+    """Show year chart as ASCII art."""
+    try:
+        style = request.args.get('style', 'line')
+        ascii_chart = facility_manager.generate_year_ascii_chart(style=style)
+        
+        return f"""
+        <html>
+        <head>
+            <title>Year Chart - ASCII Art</title>
+            <style>
+                body {{ font-family: 'Courier New', monospace; margin: 20px; }}
+                pre {{ white-space: pre; font-size: 12px; }}
+                .nav {{ margin-bottom: 20px; }}
+                .nav a {{ margin-right: 10px; }}
+            </style>
+        </head>
+        <body>
+            <div class="nav">
+                <a href="/">Home</a>
+                <a href="/charts/year">Interactive Chart</a>
+                <a href="/ascii/year">ASCII Chart</a>
+                <a href="/ascii/year?style=bar">Bar Style</a>
+                <a href="/ascii/year?style=histogram">Histogram Style</a>
+            </div>
+            <h2>Emissions by Year - ASCII Art Chart</h2>
+            <pre>{ascii_chart}</pre>
+        </body>
+        </html>
+        """
+    except Exception as e:
+        return f"<h2>Error generating ASCII chart: {e}</h2>"
+
+@app.route('/ascii/top-facilities')
+def show_top_facilities_ascii_chart():
+    """Show top facilities chart as ASCII art."""
+    try:
+        top_n = request.args.get('top_n', 10, type=int)
+        style = request.args.get('style', 'bar')
+        ascii_chart = facility_manager.generate_top_facilities_ascii_chart(top_n=top_n, style=style)
+        
+        return f"""
+        <html>
+        <head>
+            <title>Top Facilities Chart - ASCII Art</title>
+            <style>
+                body {{ font-family: 'Courier New', monospace; margin: 20px; }}
+                pre {{ white-space: pre; font-size: 12px; }}
+                .nav {{ margin-bottom: 20px; }}
+                .nav a {{ margin-right: 10px; }}
+            </style>
+        </head>
+        <body>
+            <div class="nav">
+                <a href="/">Home</a>
+                <a href="/charts/top-facilities">Interactive Chart</a>
+                <a href="/ascii/top-facilities">ASCII Chart</a>
+                <a href="/ascii/top-facilities?style=line">Line Style</a>
+                <a href="/ascii/top-facilities?style=histogram">Histogram Style</a>
+                <a href="/ascii/top-facilities?top_n=5">Top 5</a>
+                <a href="/ascii/top-facilities?top_n=15">Top 15</a>
+            </div>
+            <h2>Top {top_n} Facilities by Emissions - ASCII Art Chart</h2>
+            <pre>{ascii_chart}</pre>
+        </body>
+        </html>
+        """
+    except Exception as e:
+        return f"<h2>Error generating ASCII chart: {e}</h2>"
+
+# JSON API endpoints for ASCII charts (for client applications)
+@app.route('/api/ascii/province')
+def api_province_ascii_chart():
+    """Return province chart as ASCII art in JSON format."""
+    try:
+        style = request.args.get('style', 'bar')
+        ascii_chart = facility_manager.generate_province_ascii_chart(style=style)
+        
+        return jsonify({
+            'success': True,
+            'chart_type': 'province',
+            'style': style,
+            'ascii_chart': ascii_chart
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/ascii/year')
+def api_year_ascii_chart():
+    """Return year chart as ASCII art in JSON format."""
+    try:
+        style = request.args.get('style', 'line')
+        ascii_chart = facility_manager.generate_year_ascii_chart(style=style)
+        
+        return jsonify({
+            'success': True,
+            'chart_type': 'year',
+            'style': style,
+            'ascii_chart': ascii_chart
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/ascii/top-facilities')
+def api_top_facilities_ascii_chart():
+    """Return top facilities chart as ASCII art in JSON format."""
+    try:
+        top_n = request.args.get('top_n', 10, type=int)
+        style = request.args.get('style', 'bar')
+        ascii_chart = facility_manager.generate_top_facilities_ascii_chart(top_n=top_n, style=style)
+        
+        return jsonify({
+            'success': True,
+            'chart_type': 'top_facilities',
+            'style': style,
+            'top_n': top_n,
+            'ascii_chart': ascii_chart
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     print("Facility Management System")
     print("Author: Huaifang Yin")
@@ -156,6 +322,14 @@ if __name__ == '__main__':
     print("  - http://localhost:5000/charts/province")
     print("  - http://localhost:5000/charts/year")
     print("  - http://localhost:5000/charts/top-facilities")
+    print("ASCII Art Chart routes:")
+    print("  - http://localhost:5000/ascii/province")
+    print("  - http://localhost:5000/ascii/year")
+    print("  - http://localhost:5000/ascii/top-facilities")
+    print("API endpoints for ASCII charts:")
+    print("  - http://localhost:5000/api/ascii/province")
+    print("  - http://localhost:5000/api/ascii/year")
+    print("  - http://localhost:5000/api/ascii/top-facilities")
     print("Press Ctrl+C to stop the server")
     
     try:

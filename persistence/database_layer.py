@@ -1,8 +1,8 @@
 """
 Course: CST8002 - Programming Language Research Project
 Assignment: Practical Project03
-Professor: [Stanley Pieda,Tyler DeLay]
-Due Date: [June 15  2025]
+Professor: [Tyler DeLay]
+Due Date: [Aug 03 2025]
 Author: [Huaifang Yin]
 Description: Database layer for handling MySQL database operations with Django-style patterns.
 """
